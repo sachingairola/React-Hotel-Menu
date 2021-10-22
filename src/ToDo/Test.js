@@ -8,16 +8,25 @@ function Test() {
     const showItems = ()=>{
         if(!showData){
             alert("Please enter some data");
-        }else{
-            setNewData([...newData, showData])
+        }else{ const newShowData ={
+            id: new Date().getTime().toString(),
+            name: showData
+        }
+            setNewData([...newData, newShowData])
             setShowData("")
         }
     }
 
+    const delItem = (id)=>{
+            const updatedItem = newData.filter((curEle)=>{
+                return curEle.id !== id;
+            })
+            setNewData(updatedItem);
+    }
     return ( 
         <>
             <div>
-                <input type="text"  onChange={(e)=>setShowData(e.target.value)} value={showData}/>
+                <input type="text"  onChange={(e)=>setShowData(e.target.value)} value={showData} autoFocus="autofocus" />
                 <i className="fa fa-plus add-btn"onClick={showItems}></i>
             </div>
             {
@@ -25,7 +34,11 @@ function Test() {
                     return(
 
                     <div>
-                        <h2>{data}</h2>
+                        <h2>{data.name}</h2>
+                        <div className="todo-btn" key={data.id}>
+                            <i className="far fa-trash add-btn" onClick={()=>delItem(data.id)}></i>
+                            <i className="far fa-trash-alt add-btn" onClick={console.log(data.id)}></i>
+                        </div>
                     </div>
                     )
 
